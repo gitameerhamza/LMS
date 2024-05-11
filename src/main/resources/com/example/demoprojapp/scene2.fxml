@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="451.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoprojapp.HelloController">
-   <Button layoutX="244.0" layoutY="122.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="112.0" text="Add Member" wrapText="true" />
+   <Button layoutX="244.0" layoutY="122.0" mnemonicParsing="false" onAction="#switchscene4" prefHeight="26.0" prefWidth="112.0" text="Add Member" wrapText="true" />
    <Button layoutX="244.0" layoutY="73.0" mnemonicParsing="false" onAction="#switchscene3" prefHeight="26.0" prefWidth="112.0" text="Add Book" />
    <Button layoutX="244.0" layoutY="168.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="112.0" text="Search Book" />
    <Button layoutX="244.0" layoutY="213.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="112.0" text="Borrow Book" />

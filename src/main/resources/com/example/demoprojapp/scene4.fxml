@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.demoprojapp.HelloController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoprojapp.HelloController">
+    <children>
+        <TextField fx:id="Memid_in" layoutX="206.0" layoutY="86.0" promptText="Enter Member ID" />
+        <Label layoutX="86.0" layoutY="90.0" prefHeight="19.0" prefWidth="109.0" text="Enter Member ID" />
+        <Button fx:id="Enter_btn" layoutX="254.0" layoutY="174.0" mnemonicParsing="false" onAction="#addMember" text="Enter" />
+        <Label fx:id="label_2" layoutX="307.0" layoutY="166.0" prefHeight="43.0" prefWidth="153.0" textFill="#f50000" />
+        <TextField fx:id="Memname_in" layoutX="206.0" layoutY="124.0" promptText="Enter Member Name" />
+        <Label layoutX="68.0" layoutY="127.0" prefHeight="19.0" prefWidth="127.0" text="Enter Member Name" />
+        <Button fx:id="main_menu_btn" layoutX="206.0" layoutY="232.0" mnemonicParsing="false" onAction="#switchscene2" text="Go Back Main Menu" />
+        <Label fx:id="label_21" layoutX="383.0" layoutY="87.0" prefHeight="26.0" prefWidth="160.0" text="*ID MUST BE IN NUMBER" textFill="#f50000" />
+    </children>
 </AnchorPane>

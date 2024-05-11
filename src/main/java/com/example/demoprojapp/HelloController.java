@@ -28,6 +28,10 @@ public class HelloController {
     @FXML
     private Stage stage;
     @FXML
+    private TextField Memid_in;
+    @FXML
+    private TextField Memname_in;
+    @FXML
     private Scene scene;
     @FXML
     private Parent root;
@@ -54,19 +58,25 @@ public class HelloController {
         stage.setScene(scene);
         stage.show();
     }
-
-    @FXML
-    protected void mylabelviewer(){
-        labl.setText("just checking");
+    public void switchscene4(ActionEvent event) throws IOException {
+        root =FXMLLoader.load(getClass().getResource("scene4.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
+
     Library library = new Library();
     Scanner scanner = new Scanner(System.in);
     @FXML
     private  void addBook() {
-
         String id = bookid_in.getText();
         String title = book_in2.getText();
         String author = book_in3.getText();
+        if(!(id.matches("\\d+"))){
+            label_2.setText("Bro Look at the Id ");
+            return;
+        }
         if (!(id.isBlank() || title.isBlank() || author.isBlank())) {
             Book book = new Book(id, title, author);
             library.addBook(book);
@@ -74,21 +84,29 @@ public class HelloController {
             return;
         }
         label_2.setText("Something Not Right!\nTry Again");
-
-
     }
-
+    @FXML
     private void addMember() {
-        System.out.print("Enter Member ID: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Enter Member Name: ");
-        String name = scanner.nextLine();
-
-        Member member = new Member(id, name);
-        library.addMember(member);
-        System.out.println("Member added successfully.");
+        if(!(Memid_in.getText().matches("\\d+"))){
+            label_2.setText("Bro Look at the Id ");
+            return;
+        }
+        if(Memname_in.getText().matches("\\d+")){
+            label_2.setText("Bro Look at the Name ");
+            return;
+        }
+        if(Memid_in.getText().isBlank()){
+            label_2.setText("Bro Look at the Id ");
+            return;
+        }
+        int id = Integer.parseInt(Memid_in.getText());
+        String name = Memname_in.getText();
+        if (!( name.isBlank())) {
+            Member member = new Member(id, name);
+            library.addMember(member);
+            label_2.setText("Member added successfully.");
+            return;
+        }
     }
 
     private  void searchBook() {

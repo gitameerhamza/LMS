@@ -22,13 +22,21 @@ public class Library {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                String id = String.valueOf(Integer.parseInt(parts[0]));
-                String title = parts[1];
-                String author = parts[2];
-                boolean available = Boolean.parseBoolean(parts[3]);
-                Book book = new Book(id, title, author);
-                book.setAvailable(available);
-                books.add(book);
+                if (parts.length >= 4) {
+                    try {
+                        String id = String.valueOf(Integer.parseInt(parts[0]));
+                        String title = parts[1];
+                        String author = parts[2];
+                        boolean available = Boolean.parseBoolean(parts[3]);
+                        Book book = new Book(id, title, author);
+                        book.setAvailable(available);
+                        books.add(book);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid book entry: " + line + ". Skipping...");
+                    }
+                } else {
+                    System.out.println("Invalid book entry: " + line);
+                }
             }
         } catch (IOException e) {
             System.out.println("Error loading books: " + e.getMessage());
