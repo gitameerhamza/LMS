@@ -98,9 +98,12 @@ public class Library {
         saveMembers();
     }
 
-    public Book findBook(String bookId) {
+    public Book findBook(String bookIdOrName) {
         for (Book book : books) {
-            if (book.getId() == bookId) {
+            if (book.getId().equals(bookIdOrName)) {
+                return book;
+            }
+            if (book.getTitle().equals(bookIdOrName)) {
                 return book;
             }
         }
