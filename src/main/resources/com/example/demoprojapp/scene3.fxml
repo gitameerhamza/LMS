@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoprojapp.HelloController">
+   <children>
+      <TextField fx:id="bookid_in" layoutX="207.0" layoutY="136.0" onAction="#enterclicked" promptText="Enter some Text" />
+      <Label layoutX="250.0" layoutY="109.0" prefHeight="19.0" prefWidth="74.0" text="Enter Book ID" />
+      <Button fx:id="Enter_btn" layoutX="270.0" layoutY="174.0" mnemonicParsing="false" onAction="#enterclicked" text="Enter" />
+      <Label fx:id="labl_2" layoutX="274.0" layoutY="236.0" prefHeight="17.0" prefWidth="39.0" />
+   </children>
+</AnchorPane>
