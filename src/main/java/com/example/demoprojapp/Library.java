@@ -21,7 +21,7 @@ public class Library {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                int id = Integer.parseInt(parts[0]);
+                String id = String.valueOf(Integer.parseInt(parts[0]));
                 String title = parts[1];
                 String author = parts[2];
                 boolean available = Boolean.parseBoolean(parts[3]);
@@ -89,7 +89,7 @@ public class Library {
         saveMembers();
     }
 
-    public Book findBook(int bookId) {
+    public Book findBook(String bookId) {
         for (Book book : books) {
             if (book.getId() == bookId) {
                 return book;
@@ -107,12 +107,12 @@ public class Library {
         return null;
     }
 
-    public void lendBook(int memberId, int bookId) {
+    public void lendBook(int memberId, String bookId) {
         Member member = findMember(memberId);
         Book book = findBook(bookId);
 
         if (member != null && book != null && book.isAvailable()) {
-            member.borrowBook(bookId);
+            member.borrowBook(Integer.parseInt(bookId));
             book.setAvailable(false);
             System.out.println("Book '" + book.getTitle() + "' has been successfully borrowed by " + member.getName());
             saveBooks();
@@ -124,7 +124,7 @@ public class Library {
 
     public void returnBook(int memberId, int bookId) {
         Member member = findMember(memberId);
-        Book book = findBook(bookId);
+        Book book = findBook(String.valueOf(bookId));
 
         if (member != null && book != null && !book.isAvailable()) {
             member.returnBook(bookId);
@@ -146,7 +146,7 @@ public class Library {
             if (!borrowedBooks.isEmpty()) {
                 System.out.println("Books Borrowed:");
                 for (int bookId : borrowedBooks) {
-                    Book book = findBook(bookId);
+                    Book book = findBook(String.valueOf(bookId));
                     if (book != null) {
                         System.out.println("ID: " + book.getId() + ", Title: " + book.getTitle() + ", Author: " + book.getAuthor());
                     }

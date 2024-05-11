@@ -7,9 +7,13 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoprojapp.HelloController">
    <children>
-      <TextField fx:id="bookid_in" layoutX="207.0" layoutY="136.0" onAction="#enterclicked" promptText="Enter some Text" />
-      <Label layoutX="250.0" layoutY="109.0" prefHeight="19.0" prefWidth="74.0" text="Enter Book ID" />
-      <Button fx:id="Enter_btn" layoutX="270.0" layoutY="174.0" mnemonicParsing="false" onAction="#enterclicked" text="Enter" />
-      <Label fx:id="labl_2" layoutX="274.0" layoutY="236.0" prefHeight="17.0" prefWidth="39.0" />
+      <TextField fx:id="bookid_in" layoutX="206.0" layoutY="86.0" onAction="#addBook" promptText="Enter Book ID" />
+      <Label layoutX="121.0" layoutY="90.0" prefHeight="19.0" prefWidth="74.0" text="Enter Book ID" />
+      <Button fx:id="Enter_btn" layoutX="240.0" layoutY="210.0" mnemonicParsing="false" onAction="#addBook" text="Enter" />
+      <Label fx:id="label_2" layoutX="173.0" layoutY="257.0" prefHeight="84.0" prefWidth="182.0" textFill="#f50000" />
+      <TextField fx:id="bookid_in2" layoutX="206.0" layoutY="158.0" promptText="Enter Book Author" />
+      <TextField fx:id="bookid_name" layoutX="206.0" layoutY="124.0" promptText="Enter Book Name" />
+      <Label layoutX="96.0" layoutY="127.0" prefHeight="19.0" prefWidth="99.0" text="Enter Book Name" />
+      <Label layoutX="96.0" layoutY="161.0" prefHeight="19.0" prefWidth="99.0" text="Enter Book Author" />
    </children>
 </AnchorPane>

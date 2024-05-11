@@ -19,7 +19,7 @@ public class HelloController {
     @FXML
     private Label labl;
     @FXML
-    private Label labl_2;
+    private Label label_2;
     @FXML
     private Stage stage;
     @FXML
@@ -28,8 +28,7 @@ public class HelloController {
     private Parent root;
     @FXML
     private TextField bookid_in;
-    HelloApplication chk;
-    public String id_in;
+
     @FXML
     public void switchscene3(ActionEvent event) throws IOException {
         root =FXMLLoader.load(getClass().getResource("scene3.fxml"));
@@ -46,20 +45,18 @@ public class HelloController {
         stage.setScene(scene);
         stage.show();
     }
-    @FXML
-    public void enterclicked(){
-        labl_2.setText(bookid_in.getText());
-        bookid_in.clear();
-    }
-    @FXML
-    protected void mylabelviewer(){ labl.setText("just checking");
 
+    @FXML
+    protected void mylabelviewer(){
+        labl.setText("just checking");
     }
-    static Library library = new Library();
-    static Scanner scanner = new Scanner(System.in);
-    private static void addBook() {
-        System.out.print("Enter Book ID: ");
-        int id = scanner.nextInt();
+    Library library = new Library();
+    Scanner scanner = new Scanner(System.in);
+    @FXML
+    private  void addBook() {
+        label_2.setText("Something Not Right!\nTry Again");
+        bookid_in.clear();
+        String id = bookid_in.getText();
         scanner.nextLine();
 
         System.out.print("Enter Book Title: ");
@@ -73,7 +70,7 @@ public class HelloController {
         System.out.println("Book added successfully.");
     }
 
-    private static void addMember() {
+    private void addMember() {
         System.out.print("Enter Member ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -86,11 +83,11 @@ public class HelloController {
         System.out.println("Member added successfully.");
     }
 
-    private static void searchBook() {
+    private  void searchBook() {
         System.out.print("Enter Book ID: ");
         int id = scanner.nextInt();
 
-        Book book = library.findBook(id);
+        Book book = library.findBook(String.valueOf(id));
         if (book != null) {
             System.out.println("Book found:");
             System.out.println("ID: "+book.getId());
@@ -102,7 +99,7 @@ public class HelloController {
         }
     }
 
-    private static void borrowBook() {
+    private  void borrowBook() {
         System.out.print("Enter Member ID: ");
         int memberId = scanner.nextInt();
         scanner.nextLine();
@@ -110,10 +107,10 @@ public class HelloController {
         System.out.print("Enter Book ID: ");
         int bookId = scanner.nextInt();
 
-        library.lendBook(memberId, bookId);
+        library.lendBook(memberId, String.valueOf(bookId));
     }
 
-    private static void returnBook() {
+    private  void returnBook() {
         System.out.print("Enter Member ID: ");
         int memberId = scanner.nextInt();
         scanner.nextLine();
@@ -124,7 +121,7 @@ public class HelloController {
         library.returnBook(memberId, bookId);
     }
 
-    private static void showMemberInfo() {
+    private  void showMemberInfo() {
         System.out.print("Enter Member ID: ");
         int memberId = scanner.nextInt();
         scanner.nextLine();
