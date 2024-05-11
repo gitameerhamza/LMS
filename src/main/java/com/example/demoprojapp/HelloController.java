@@ -22,6 +22,12 @@ public class HelloController {
     @FXML
     private Label label_2;
     @FXML
+    private Label idbox;
+    @FXML
+    private Label namebox;
+    @FXML
+    private Label authbox;
+    @FXML
     private Label bookname_i;
     @FXML
     private Label chk_label;
@@ -41,6 +47,8 @@ public class HelloController {
     private TextField book_in2;
     @FXML
     private TextField book_in3;
+    @FXML
+    private TextField idname_btn;
 
     @FXML
     public void switchscene3(ActionEvent event) throws IOException {
@@ -60,6 +68,19 @@ public class HelloController {
     }
     public void switchscene4(ActionEvent event) throws IOException {
         root =FXMLLoader.load(getClass().getResource("scene4.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }public void switchscene5(ActionEvent event) throws IOException {
+        root =FXMLLoader.load(getClass().getResource("scene5.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchscene6(ActionEvent event) throws IOException {
+        root =FXMLLoader.load(getClass().getResource("scene6.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root);
         stage.setScene(scene);
@@ -109,13 +130,13 @@ public class HelloController {
         }
     }
 
+    @FXML
     private  void searchBook() {
         System.out.print("Enter Book ID: ");
-        int id = scanner.nextInt();
-
-        Book book = library.findBook(String.valueOf(id));
+        String id = idname_btn.getText();
+        Book book = library.findBook(id);
         if (book != null) {
-            System.out.println("Book found:");
+
             System.out.println("ID: "+book.getId());
             System.out.println("Title: " + book.getTitle());
             System.out.println("Author: " + book.getAuthor());

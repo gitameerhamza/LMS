@@ -10,7 +10,8 @@
    <children>
       <Label layoutX="114.0" layoutY="150.0" prefHeight="23.0" prefWidth="136.0" text="Enter Book ID OR Name" />
       <TextField fx:id="idname_btn" layoutX="250.0" layoutY="149.0" promptText="Enter Here" />
-      <Button layoutX="302.0" layoutY="187.0" mnemonicParsing="false" text="ENTER" />
-      <Button fx:id="main_menu_btn" layoutX="266.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchscene2" text="Go Back Main Menu" />
+      <Button layoutX="302.0" layoutY="187.0" mnemonicParsing="false" onAction="#searchBook" text="ENTER" />
+      <Button fx:id="main_menu_btn" layoutX="256.0" layoutY="273.0" mnemonicParsing="false" onAction="#switchscene2" text="Go Back Main Menu" />
+      <Label fx:id="bookflabel" layoutX="304.0" layoutY="240.0" />
    </children>
 </AnchorPane>
