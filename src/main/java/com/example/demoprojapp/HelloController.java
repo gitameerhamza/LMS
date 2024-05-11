@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class HelloController {
@@ -21,6 +22,10 @@ public class HelloController {
     @FXML
     private Label label_2;
     @FXML
+    private Label bookname_i;
+    @FXML
+    private Label chk_label;
+    @FXML
     private Stage stage;
     @FXML
     private Scene scene;
@@ -28,6 +33,10 @@ public class HelloController {
     private Parent root;
     @FXML
     private TextField bookid_in;
+    @FXML
+    private TextField book_in2;
+    @FXML
+    private TextField book_in3;
 
     @FXML
     public void switchscene3(ActionEvent event) throws IOException {
@@ -54,20 +63,19 @@ public class HelloController {
     Scanner scanner = new Scanner(System.in);
     @FXML
     private  void addBook() {
-        label_2.setText("Something Not Right!\nTry Again");
-        bookid_in.clear();
+
         String id = bookid_in.getText();
-        scanner.nextLine();
+        String title = book_in2.getText();
+        String author = book_in3.getText();
+        if (!(id.isBlank() || title.isBlank() || author.isBlank())) {
+            Book book = new Book(id, title, author);
+            library.addBook(book);
+            label_2.setText("Book added successfully.");
+            return;
+        }
+        label_2.setText("Something Not Right!\nTry Again");
 
-        System.out.print("Enter Book Title: ");
-        String title = scanner.nextLine();
 
-        System.out.print("Enter Book Author: ");
-        String author = scanner.nextLine();
-
-        Book book = new Book(id, title, author);
-        library.addBook(book);
-        System.out.println("Book added successfully.");
     }
 
     private void addMember() {

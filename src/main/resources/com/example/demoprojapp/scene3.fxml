@@ -11,8 +11,8 @@
       <Label layoutX="121.0" layoutY="90.0" prefHeight="19.0" prefWidth="74.0" text="Enter Book ID" />
       <Button fx:id="Enter_btn" layoutX="240.0" layoutY="210.0" mnemonicParsing="false" onAction="#addBook" text="Enter" />
       <Label fx:id="label_2" layoutX="173.0" layoutY="257.0" prefHeight="84.0" prefWidth="182.0" textFill="#f50000" />
-      <TextField fx:id="bookid_in2" layoutX="206.0" layoutY="158.0" promptText="Enter Book Author" />
-      <TextField fx:id="bookid_name" layoutX="206.0" layoutY="124.0" promptText="Enter Book Name" />
+      <TextField fx:id="book_in2" layoutX="206.0" layoutY="158.0" promptText="Enter Book Author" />
+      <TextField fx:id="book_in3" layoutX="206.0" layoutY="124.0" promptText="Enter Book Name" />
       <Label layoutX="96.0" layoutY="127.0" prefHeight="19.0" prefWidth="99.0" text="Enter Book Name" />
       <Label layoutX="96.0" layoutY="161.0" prefHeight="19.0" prefWidth="99.0" text="Enter Book Author" />
    </children>
