@@ -29,7 +29,7 @@
             <Font name="Mukta Vaani Bold" size="23.0" />
          </font>
       </Label>
-      <Button fx:id="Borow_btn" layoutX="464.0" layoutY="201.0" mnemonicParsing="false" opacity="0.0" prefHeight="72.0" prefWidth="116.0" text="Borrow This Book" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="Borow_btn" layoutX="464.0" layoutY="201.0" mnemonicParsing="false" onAction="#borrowBook" opacity="0.0" prefHeight="72.0" prefWidth="116.0" text="Borrow This Book" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Bai Jamjuree Regular" size="14.0" />
          </font>

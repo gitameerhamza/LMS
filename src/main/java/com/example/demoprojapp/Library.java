@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-
     private List<Book> books;
     private List<Member> members;
     private static final String BOOKS_FILE = "books.txt";
@@ -119,18 +118,18 @@ public class Library {
         return null;
     }
 
-    public void lendBook(int memberId, String bookId) {
+    public boolean lendBook(int memberId, String bookId) {
         Member member = findMember(memberId);
         Book book = findBook(bookId);
 
         if (member != null && book != null && book.isAvailable()) {
             member.borrowBook(Integer.parseInt(bookId));
             book.setAvailable(false);
-            System.out.println("Book '" + book.getTitle() + "' has been successfully borrowed by " + member.getName());
             saveBooks();
             saveMembers();
+            return true;
         } else {
-            System.out.println("Book cannot be borrowed. Check member ID or book availability.");
+            return false;
         }
     }
 

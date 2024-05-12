@@ -8,12 +8,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class HelloController {
@@ -30,6 +27,8 @@ public class HelloController {
     private Label l4;
     @FXML
     private Label bookflabel;
+    @FXML
+    private Label idbox;
     @FXML
     private Stage stage;
     @FXML
@@ -152,14 +151,11 @@ public class HelloController {
     }
     @FXML
     private  void borrowBook() {
-        System.out.print("Enter Member ID: ");
-        int memberId = scanner.nextInt();
-        scanner.nextLine();
+        int memberId = Integer.parseInt(Memid_in.getText());
 
-        System.out.print("Enter Book ID: ");
-        int bookId = scanner.nextInt();
-
-        library.lendBook(memberId, String.valueOf(bookId));
+        int bookId = Integer.parseInt(bookid_in.getText());
+        boolean chk=library.lendBook(memberId, String.valueOf(bookId));
+        idbox.setText((chk)?"BOOK Borrowed":"BOOK NOT AVAILABLE");
     }
 
     private  void returnBook() {

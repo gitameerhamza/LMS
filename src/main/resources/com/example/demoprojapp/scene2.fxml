@@ -7,7 +7,7 @@
    <Button layoutX="244.0" layoutY="122.0" mnemonicParsing="false" onAction="#switchscene4" prefHeight="26.0" prefWidth="112.0" text="Add Member" wrapText="true" />
    <Button layoutX="244.0" layoutY="73.0" mnemonicParsing="false" onAction="#switchscene3" prefHeight="26.0" prefWidth="112.0" text="Add Book" />
    <Button layoutX="244.0" layoutY="168.0" mnemonicParsing="false" onAction="#switchscene5" prefHeight="26.0" prefWidth="112.0" text="Search Book" />
-   <Button layoutX="244.0" layoutY="213.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="112.0" text="Borrow Book" />
+   <Button layoutX="244.0" layoutY="213.0" mnemonicParsing="false" onAction="#switchscene6" prefHeight="20.0" prefWidth="112.0" text="Borrow Book" />
    <Button layoutX="244.0" layoutY="258.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="112.0" text="Return Book" />
    <Button layoutX="244.0" layoutY="298.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="112.0" text="Show Member Info" textAlignment="CENTER" wrapText="true" />
    <Button layoutX="244.0" layoutY="354.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="112.0" text="Exit" />

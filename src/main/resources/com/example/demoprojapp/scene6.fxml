@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demoprojapp.HelloController">
    <children>
-      <Label fx:id="idbox" layoutX="281.0" layoutY="110.0" prefHeight="26.0" prefWidth="160.0" />
+      <Label fx:id="idbox" layoutX="179.0" layoutY="256.0" prefHeight="26.0" prefWidth="160.0" />
       <Label fx:id="namebox" layoutX="281.0" layoutY="154.0" prefHeight="26.0" prefWidth="98.0" />
       <Button layoutX="226.0" layoutY="328.0" mnemonicParsing="false" onAction="#switchscene2" text="Back To Mainu" />
       <Label layoutX="213.0" layoutY="62.0" text="Enter Member ID" />
