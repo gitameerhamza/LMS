@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -15,28 +17,27 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class HelloController {
-    @FXML
-    private Label welcomeText;
-    @FXML
-    private Label labl;
+
     @FXML
     private Label label_2;
     @FXML
-    private Label idbox;
+    private Label l1;
     @FXML
-    private Label namebox;
+    private Label l2;
     @FXML
-    private Label authbox;
+    private Label l3;
     @FXML
-    private Label bookname_i;
+    private Label l4;
     @FXML
-    private Label chk_label;
+    private Label bookflabel;
     @FXML
     private Stage stage;
     @FXML
     private TextField Memid_in;
     @FXML
     private TextField Memname_in;
+    @FXML
+    private Button Borow_btn;
     @FXML
     private Scene scene;
     @FXML
@@ -49,7 +50,6 @@ public class HelloController {
     private TextField book_in3;
     @FXML
     private TextField idname_btn;
-
     @FXML
     public void switchscene3(ActionEvent event) throws IOException {
         root =FXMLLoader.load(getClass().getResource("scene3.fxml"));
@@ -86,7 +86,6 @@ public class HelloController {
         stage.setScene(scene);
         stage.show();
     }
-
     Library library = new Library();
     Scanner scanner = new Scanner(System.in);
     @FXML
@@ -106,6 +105,7 @@ public class HelloController {
         }
         label_2.setText("Something Not Right!\nTry Again");
     }
+
     @FXML
     private void addMember() {
         if(!(Memid_in.getText().matches("\\d+"))){
@@ -129,23 +129,28 @@ public class HelloController {
             return;
         }
     }
-
     @FXML
     private  void searchBook() {
-        System.out.print("Enter Book ID: ");
+
         String id = idname_btn.getText();
         Book book = library.findBook(id);
         if (book != null) {
-
-            System.out.println("ID: "+book.getId());
-            System.out.println("Title: " + book.getTitle());
-            System.out.println("Author: " + book.getAuthor());
-            System.out.println("Availability: " + (book.isAvailable() ? "Available" : "Not Available"));
+            Borow_btn.setOpacity(1);
+            bookflabel.setText("BOOK FOUND");
+            l1.setText(book.getId());
+            l2.setText(book.getTitle());
+            l3.setText(book.getAuthor());
+            l4.setText((book.isAvailable() ? "Available" : "Not Available"));
         } else {
-            System.out.println("Book with ID " + id + " not found.");
+            l1.setText("");
+            l2.setText("");
+            l3.setText("");
+            l4.setText("");
+            Borow_btn.setOpacity(0);
+            bookflabel.setText("Book Not Found");
         }
     }
-
+    @FXML
     private  void borrowBook() {
         System.out.print("Enter Member ID: ");
         int memberId = scanner.nextInt();

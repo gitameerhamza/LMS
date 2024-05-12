@@ -10,7 +10,7 @@
         <TextField fx:id="Memid_in" layoutX="206.0" layoutY="86.0" promptText="Enter Member ID" />
         <Label layoutX="86.0" layoutY="90.0" prefHeight="19.0" prefWidth="109.0" text="Enter Member ID" />
         <Button fx:id="Enter_btn" layoutX="254.0" layoutY="174.0" mnemonicParsing="false" onAction="#addMember" text="Enter" />
-        <Label fx:id="label_2" layoutX="307.0" layoutY="166.0" prefHeight="43.0" prefWidth="153.0" textFill="#f50000" />
+        <Label fx:id="label_2" layoutX="307.0" layoutY="166.0" prefHeight="43.0" prefWidth="264.0" textFill="#f50000" />
         <TextField fx:id="Memname_in" layoutX="206.0" layoutY="124.0" promptText="Enter Member Name" />
         <Label layoutX="68.0" layoutY="127.0" prefHeight="19.0" prefWidth="127.0" text="Enter Member Name" />
         <Button fx:id="main_menu_btn" layoutX="206.0" layoutY="232.0" mnemonicParsing="false" onAction="#switchscene2" text="Go Back Main Menu" />
