@@ -133,19 +133,20 @@ public class Library {
         }
     }
 
-    public void returnBook(int memberId, int bookId) {
+    public boolean returnBook(int memberId, String bookId) {
         Member member = findMember(memberId);
         Book book = findBook(String.valueOf(bookId));
-
         if (member != null && book != null && !book.isAvailable()) {
             member.returnBook(bookId);
             book.setAvailable(true);
-            System.out.println("Book '" + book.getTitle() + "' has been successfully returned by " + member.getName());
+            System.out.println("Book '" + book.getTitle() + " has been successfully returned by " + member.getName());
             saveBooks();
             saveMembers();
+            return true;
         } else {
             System.out.println("Book cannot be returned. Check member ID or book availability.");
         }
+        return false;
     }
 
     public void showMemberInfo(int memberId) {
@@ -169,4 +170,5 @@ public class Library {
             System.out.println("Member with ID " + memberId + " not found.");
         }
     }
+
 }

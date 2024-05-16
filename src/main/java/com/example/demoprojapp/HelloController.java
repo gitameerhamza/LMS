@@ -11,7 +11,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
+
+import static com.sun.javafx.application.PlatformImpl.exit;
+
 
 public class HelloController {
 
@@ -42,13 +46,22 @@ public class HelloController {
     @FXML
     private Parent root;
     @FXML
-    private TextField bookid_in;
+    private TextField bookid_in,bookid_in2;
     @FXML
     private TextField book_in2;
     @FXML
     private TextField book_in3;
     @FXML
     private TextField idname_btn;
+    @FXML
+    private TextField memberid,mem2;
+    @FXML
+    private Label label_b;
+    @FXML
+    private Label label_c;
+    @FXML
+    private Label label_c1;
+
     @FXML
     public void switchscene3(ActionEvent event) throws IOException {
         root =FXMLLoader.load(getClass().getResource("scene3.fxml"));
@@ -80,6 +93,13 @@ public class HelloController {
     }
     public void switchscene6(ActionEvent event) throws IOException {
         root =FXMLLoader.load(getClass().getResource("scene6.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchscene7(ActionEvent event) throws IOException {
+        root =FXMLLoader.load(getClass().getResource("scene7.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root);
         stage.setScene(scene);
@@ -134,7 +154,11 @@ public class HelloController {
         String id = idname_btn.getText();
         Book book = library.findBook(id);
         if (book != null) {
+
             Borow_btn.setOpacity(1);
+            label_b.setOpacity(1);
+            memberid.setOpacity(1);
+            label_c.setOpacity(1);
             bookflabel.setText("BOOK FOUND");
             l1.setText(book.getId());
             l2.setText(book.getTitle());
@@ -146,29 +170,34 @@ public class HelloController {
             l3.setText("");
             l4.setText("");
             Borow_btn.setOpacity(0);
+            label_b.setOpacity(0);
+            memberid.setOpacity(0);
+            label_c.setOpacity(0);
             bookflabel.setText("Book Not Found");
         }
     }
     @FXML
     private  void borrowBook() {
         int memberId = Integer.parseInt(Memid_in.getText());
-
         int bookId = Integer.parseInt(bookid_in.getText());
         boolean chk=library.lendBook(memberId, String.valueOf(bookId));
         idbox.setText((chk)?"BOOK Borrowed":"BOOK NOT AVAILABLE");
     }
-
-    private  void returnBook() {
-        System.out.print("Enter Member ID: ");
-        int memberId = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Enter Book ID: ");
-        int bookId = scanner.nextInt();
-
-        library.returnBook(memberId, bookId);
+    @FXML
+    private  void borrowBook2() {
+        int memberId = Integer.parseInt(memberid.getText());
+        int bookId = Integer.parseInt(l1.getText());
+        boolean chk2=library.lendBook(memberId, String.valueOf(bookId));
+        label_c.setText((chk2)?"BOOK Borrowed":"Check ID");
     }
-
+    @FXML
+    private  void returnBook() {
+        int memberId = Integer.parseInt(mem2.getText());
+        String bookId = bookid_in2.getText();
+        boolean chk2=library.returnBook(memberId, bookId);
+        label_c1.setText((chk2)?"BOOK Returned":"Check ID");
+    }
+    @FXML
     private  void showMemberInfo() {
         System.out.print("Enter Member ID: ");
         int memberId = scanner.nextInt();
@@ -176,4 +205,9 @@ public class HelloController {
 
         library.showMemberInfo(memberId);
     }
+    @FXML
+    private void endit(){
+
+    }
+
 }
