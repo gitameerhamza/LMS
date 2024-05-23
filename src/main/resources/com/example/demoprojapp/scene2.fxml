@@ -13,7 +13,7 @@
    <Button layoutX="244.0" layoutY="168.0" mnemonicParsing="false" onAction="#switchscene5" prefHeight="26.0" prefWidth="112.0" text="Search Book" />
    <Button layoutX="244.0" layoutY="213.0" mnemonicParsing="false" onAction="#switchscene6" prefHeight="20.0" prefWidth="112.0" text="Borrow Book" />
    <Button layoutX="244.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchscene7" prefHeight="19.0" prefWidth="112.0" text="Return Book" />
-   <Button layoutX="244.0" layoutY="298.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="112.0" text="Show Member Info" textAlignment="CENTER" wrapText="true" />
+   <Button layoutX="244.0" layoutY="298.0" mnemonicParsing="false" onAction="#switchscene8" prefHeight="46.0" prefWidth="112.0" text="Show Member Info" textAlignment="CENTER" wrapText="true" />
    <Button layoutX="244.0" layoutY="354.0" mnemonicParsing="false" onAction="#endit" prefHeight="10.0" prefWidth="112.0" text="Exit" />
    <ImageView fitHeight="58.0" fitWidth="112.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
       <image>

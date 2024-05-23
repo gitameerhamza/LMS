@@ -11,13 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
-
-import static com.sun.javafx.application.PlatformImpl.exit;
-
-
-public class HelloController {
+public class HelloController  {
 
     @FXML
     private Label label_2;
@@ -100,6 +95,13 @@ public class HelloController {
     }
     public void switchscene7(ActionEvent event) throws IOException {
         root =FXMLLoader.load(getClass().getResource("scene7.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchscene8(ActionEvent event) throws IOException {
+        root =FXMLLoader.load(getClass().getResource("scene8.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root);
         stage.setScene(scene);
@@ -202,12 +204,11 @@ public class HelloController {
         System.out.print("Enter Member ID: ");
         int memberId = scanner.nextInt();
         scanner.nextLine();
-
         library.showMemberInfo(memberId);
     }
     @FXML
     private void endit(){
-
+        System.exit(0);
     }
 
 }
