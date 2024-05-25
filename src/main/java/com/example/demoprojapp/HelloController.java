@@ -114,8 +114,9 @@ public class HelloController  {
         String id = bookid_in.getText();
         String title = book_in2.getText();
         String author = book_in3.getText();
+        //user can't enter number in id field
         if(!(id.matches("\\d+"))){
-            label_2.setText("Bro Look at the Id ");
+            label_2.setText("ID is Incorrect");
             return;
         }
         if (!(id.isBlank() || title.isBlank() || author.isBlank())) {
@@ -130,11 +131,11 @@ public class HelloController  {
     @FXML
     private void addMember() {
         if(!(Memid_in.getText().matches("\\d+"))){
-            label_2.setText("Bro Look at the Id ");
+            label_2.setText("ID not in numbers");
             return;
         }
         if(Memname_in.getText().matches("\\d+")){
-            label_2.setText("Bro Look at the Name ");
+            label_2.setText("Member Name in numbers");
             return;
         }
         if(Memid_in.getText().isBlank()){

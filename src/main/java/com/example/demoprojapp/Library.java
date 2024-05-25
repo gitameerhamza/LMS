@@ -2,8 +2,11 @@ package com.example.demoprojapp;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.sql.*;
 public class Library {
+    String url="jdbc:mysql://localhost:3306/Library";
+    String username="root";
+    String password="";
     private List<Book> books;
     private List<Member> members;
     private static final String BOOKS_FILE = "books.txt";
@@ -61,6 +64,7 @@ public class Library {
     }
 
     private void saveBooks() {
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BOOKS_FILE))) {
             for (Book book : books) {
                 writer.write(book.getId() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.isAvailable());
@@ -69,6 +73,9 @@ public class Library {
         } catch (IOException e) {
             System.out.println("Error saving books: " + e.getMessage());
         }
+    }
+    private void savebook(){
+
     }
 
     private void saveMembers() {
@@ -89,31 +96,114 @@ public class Library {
 
     public void addBook(Book book) {
         books.add(book);
+        String sqlQuery = "INSERT INTO Books (ID, `Book Name`, `Author Name`, Availability) " +
+        "VALUES (" + book.getId() + "," + book.getTitle() + "," + book.getAuthor() + "," + (book.isAvailable() ? "TRUE" : "FALSE") + ");";
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
+            try {
+                Statement st = con.createStatement();
+                st.executeUpdate(sqlQuery);
+            } catch (Exception e) {
+                System.out.println("Query didnt work"+e.getMessage());
+            }
+        } catch (Exception e) {
+            System.out.println("not connected");
+        }
         saveBooks();
     }
 
-    public void addMember(Member member) {
-        members.add(member);
-        saveMembers();
-    }
+//    public void addMember(Member member) {
+//        members.add(member);
+//        System.out.println(member.getId()+member.getName());
+//        String sql = "INSERT INTO Members (Name,ID) " +
+//                "VALUES (" + member.getName() + ", " + member.getId() + ")";
+//        try {
+//            Connection con = DriverManager.getConnection(url, username, password);
+//            try{
+//                Statement st = con.createStatement();
+//                st.executeUpdate(sql);
+//            } catch (Exception e) {
+//                System.out.println("Query didnt work "+e.getMessage());
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error adding member: " + e.getMessage());
+//        }
+//        saveMembers();
+//    }
 
-    public Book findBook(String bookIdOrName) {
-        for (Book book : books) {
-            if (book.getId().equals(bookIdOrName)) {
-                return book;
-            }
-            if (book.getTitle().equals(bookIdOrName)) {
-                return book;
-            }
+    //understanding of this part is undergoing
+public void addMember(Member member) {
+    members.add(member);
+    String sql = "INSERT INTO Members (Name, ID) VALUES (?, ?)";
+    try (Connection con = DriverManager.getConnection(url, username, password);
+         //prepared statement is liye use ki ha k user koi query enter na kry
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, member.getName());
+        ps.setInt(2, member.getId());
+        int rowsAffected = ps.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("Member added successfully.");
+        } else {
+            System.out.println("Failed to add member.");
         }
+    } catch (SQLException e) {
+        System.out.println("Error adding member: " + e.getMessage());
+    }
+    saveMembers();
+}
+
+// everything working absolutely fine
+    public Book findBook(String bookIdOrName) {
+        String sql = "select *from Books WHERE ID="+bookIdOrName+";";
+        try{
+            Connection con = DriverManager.getConnection(url, username, password);
+            try {
+                Statement st= con.createStatement();
+                ResultSet sr=st.executeQuery(sql);
+                    if (sr.next()) {
+                        String id = sr.getString("ID");
+                        String title = sr.getString("Book Name");
+                        String author = sr.getString("Author name");
+                        boolean availability = sr.getBoolean("Availability");
+                        Book book =new Book(id,title,author,availability);
+                        return book;
+                    }
+
+            }catch (Exception e){
+                System.out.println("Query issue"+e.getMessage());
+            }
+        }catch(Exception e){
+            System.out.println("Connection Error");
+        }
+//        for (Book book : books) {
+//            if (book.getId().equals(bookIdOrName)) {
+//                return book;
+//            }
+//            if (book.getTitle().equals(bookIdOrName)) {
+//                return book;
+//            }
+//        }
         return null;
     }
 
     public Member findMember(int memberId) {
-        for (Member member : members) {
-            if (member.getId() == memberId) {
-                return member;
+        String sql = "select *from Members WHERE ID="+memberId+";";
+        try{
+            Connection con = DriverManager.getConnection(url, username, password);
+            try {
+                Statement st= con.createStatement();
+                ResultSet sr=st.executeQuery(sql);
+                if (sr.next()) {
+                    int id = sr.getInt("ID");
+                    String name= sr.getString("Name");
+                    return new Member(id,name);//suggested by intellij
+                }
+
+            }catch (Exception e){
+                System.out.println("Query issue"+e.getMessage());
             }
+        }catch(Exception e){
+            System.out.println("Connection Error");
         }
         return null;
     }
