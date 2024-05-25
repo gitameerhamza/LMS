@@ -29,7 +29,7 @@ public class Member {
         borrowedBooks.add(bookId);
     }
 
-    public void returnBook(String bookId) {
-        borrowedBooks.remove(Integer.valueOf(bookId));
+    public void returnBook(int bookId) {
+        borrowedBooks.remove(bookId);
     }
 }

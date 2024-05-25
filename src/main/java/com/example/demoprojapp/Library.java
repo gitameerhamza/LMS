@@ -123,7 +123,7 @@ public class Library {
 //                Statement st = con.createStatement();
 //                st.executeUpdate(sql);
 //            } catch (Exception e) {
-//                System.out.println("Query didnt work "+e.getMessage());
+//                System.out.println("Query didn't work "+e.getMessage());
 //            }
 //        } catch (SQLException e) {
 //            System.out.println("Error adding member: " + e.getMessage());
@@ -207,31 +207,67 @@ public void addMember(Member member) {
         }
         return null;
     }
-
     public boolean lendBook(int memberId, String bookId) {
         Member member = findMember(memberId);
         Book book = findBook(bookId);
-
         if (member != null && book != null && book.isAvailable()) {
+            String updateMemberSQL = "UPDATE Members SET `Borrowed Books` = CONCAT(`Borrowed Books`, ?) WHERE ID = ?";
+            String updateBookSQL = "UPDATE Books SET Availability = false WHERE ID = ?";
+            try (Connection con = DriverManager.getConnection(url, username, password)) {
+                try (PreparedStatement pstMember = con.prepareStatement(updateMemberSQL);
+                     PreparedStatement pstBook = con.prepareStatement(updateBookSQL)) {
+                    pstMember.setString(1, "," + book.getId());
+                    pstMember.setInt(2, member.getId());
+                    pstMember.executeUpdate();
+                    pstBook.setString(1, book.getId());
+                    pstBook.executeUpdate();
+
+                } catch (SQLException e) {
+                    System.out.println("Query issue: " + e.getMessage());
+                    return false;
+                }
+            } catch (SQLException e) {
+                System.out.println("Connection Error: " + e.getMessage());
+                return false;
+            }
             member.borrowBook(Integer.parseInt(bookId));
             book.setAvailable(false);
             saveBooks();
             saveMembers();
             return true;
-        } else {
-            return false;
         }
+            return false;
     }
-
-    public boolean returnBook(int memberId, String bookId) {
+    public boolean returnBook(int memberId, int bookId) {
         Member member = findMember(memberId);
         Book book = findBook(String.valueOf(bookId));
         if (member != null && book != null && !book.isAvailable()) {
+            String getmemsql="SELECT *FROM MEMBERS WHERE="+member.getId();
+            String updateBookSQL = "UPDATE Books SET Availability = true WHERE ID ="+book.getId();
+            try {
+                Connection con = DriverManager.getConnection(url, username, password);
+                try {
+                    Statement st =con.createStatement();
+                    st.executeUpdate(updateBookSQL);
+                    ResultSet sr = st.executeQuery(getmemsql);
+
+                    String updateddata = sr.getString("Borrowed Books");
+
+
+                    String updateMemberSQL = "UPDATE Members SET `Borrowed Books` ="+updateddata+"  WHERE ID ="+member.getId();
+                }catch (Exception e){
+                    System.out.println("Query Issue "+e.getMessage());
+                    return false;
+                }
+            }catch (Exception e){
+                System.out.println("Connection Issue "+e.getMessage());
+                return false;
+            }
             member.returnBook(bookId);
             book.setAvailable(true);
-            System.out.println("Book '" + book.getTitle() + " has been successfully returned by " + member.getName());
             saveBooks();
             saveMembers();
+            System.out.println("Book '" + book.getTitle() + "' has been successfully returned by " + member.getName());
             return true;
         } else {
             System.out.println("Book cannot be returned. Check member ID or book availability.");

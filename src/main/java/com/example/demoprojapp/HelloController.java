@@ -196,7 +196,7 @@ public class HelloController  {
     @FXML
     private  void returnBook() {
         int memberId = Integer.parseInt(mem2.getText());
-        String bookId = bookid_in2.getText();
+        int bookId = Integer.parseInt(bookid_in2.getText());
         boolean chk2=library.returnBook(memberId, bookId);
         label_c1.setText((chk2)?"BOOK Returned":"Check ID");
     }
