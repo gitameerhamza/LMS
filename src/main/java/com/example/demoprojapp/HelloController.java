@@ -14,48 +14,12 @@ import java.io.IOException;
 import java.util.Scanner;
 public class HelloController  {
 
-    @FXML
-    private Label label_2;
-    @FXML
-    private Label l1;
-    @FXML
-    private Label l2;
-    @FXML
-    private Label l3;
-    @FXML
-    private Label l4;
-    @FXML
-    private Label bookflabel;
-    @FXML
-    private Label idbox;
-    @FXML
-    private Stage stage;
-    @FXML
-    private TextField Memid_in;
-    @FXML
-    private TextField Memname_in;
-    @FXML
-    private Button Borow_btn;
-    @FXML
-    private Scene scene;
-    @FXML
-    private Parent root;
-    @FXML
-    private TextField bookid_in,bookid_in2;
-    @FXML
-    private TextField book_in2;
-    @FXML
-    private TextField book_in3;
-    @FXML
-    private TextField idname_btn;
-    @FXML
-    private TextField memberid,mem2;
-    @FXML
-    private Label label_b;
-    @FXML
-    private Label label_c;
-    @FXML
-    private Label label_c1;
+    @FXML private Label label_2, l1, l2, l3, l4, bookflabel, idbox, label_b, label_c, label_c1;
+    @FXML private Stage stage;
+    @FXML private TextField Memid_in, Memname_in, bookid_in, bookid_in2, book_in2, book_in3, idname_btn, memberid, mem2;
+    @FXML private Button Borow_btn;
+    @FXML private Scene scene;
+    @FXML private Parent root;
 
     @FXML
     public void switchscene3(ActionEvent event) throws IOException {
