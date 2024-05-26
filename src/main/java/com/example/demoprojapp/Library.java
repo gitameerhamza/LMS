@@ -242,7 +242,7 @@ public void addMember(Member member) {
         Member member = findMember(memberId);
         Book book = findBook(String.valueOf(bookId));
         if (member != null && book != null && !book.isAvailable()) {
-            String getmemsql="SELECT *FROM MEMBERS WHERE="+member.getId();
+            String getmemsql="SELECT *FROM MEMBERS WHERE ID="+member.getId();
             String updateBookSQL = "UPDATE Books SET Availability = true WHERE ID ="+book.getId();
             try {
                 Connection con = DriverManager.getConnection(url, username, password);
@@ -252,9 +252,17 @@ public void addMember(Member member) {
                     ResultSet sr = st.executeQuery(getmemsql);
 
                     String updateddata = sr.getString("Borrowed Books");
-
-
+                    String[] parts =updateddata.split(",");
+                    updateddata="";
+                    for (int i=0;i<=parts.length;i++) {
+                        if(parts[i]==String.valueOf(bookId)){
+                            continue;
+                        }
+                        updateddata=updateddata+parts[i];
+                        updateddata=updateddata+",";
+                    }
                     String updateMemberSQL = "UPDATE Members SET `Borrowed Books` ="+updateddata+"  WHERE ID ="+member.getId();
+                    st.executeUpdate(updateMemberSQL);
                 }catch (Exception e){
                     System.out.println("Query Issue "+e.getMessage());
                     return false;
