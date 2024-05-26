@@ -157,7 +157,6 @@ public void addMember(Member member) {
                         Book book =new Book(id,title,author,availability);
                         return book;
                     }
-
             }catch (Exception e){
                 System.out.println("Query issue"+e.getMessage());
             }
@@ -192,32 +191,38 @@ public void addMember(Member member) {
         Member member = findMember(memberId);
         Book book = findBook(bookId);
         if (member != null && book != null && book.isAvailable()) {
-            String updateMemberSQL = "UPDATE Members SET `Borrowed Books` = CONCAT(`Borrowed Books`, ?) WHERE ID = ?";
+            String updateMemberSQL = "UPDATE Members SET `Borrowed Books` = " +
+                    "CASE WHEN `Borrowed Books` IS NULL OR `Borrowed Books` = '' THEN ? " +
+                    "ELSE CONCAT(`Borrowed Books`, ?, ?) END WHERE ID = ?";
             String updateBookSQL = "UPDATE Books SET Availability = false WHERE ID = ?";
-            try (Connection con = DriverManager.getConnection(url, username, password)) {
-                try (PreparedStatement pstMember = con.prepareStatement(updateMemberSQL);
-                     PreparedStatement pstBook = con.prepareStatement(updateBookSQL)) {
-                    pstMember.setString(1, "," + book.getId());
-                    pstMember.setInt(2, member.getId());
-                    pstMember.executeUpdate();
-                    pstBook.setString(1, book.getId());
-                    pstBook.executeUpdate();
 
-                } catch (SQLException e) {
-                    System.out.println("Query issue: " + e.getMessage());
-                    return false;
-                }
+            try (Connection con = DriverManager.getConnection(url, username, password);
+                 PreparedStatement pstMember = con.prepareStatement(updateMemberSQL);
+                 PreparedStatement pstBook = con.prepareStatement(updateBookSQL)) {
+
+                // For new entries where the `Borrowed Books` column might be null or empty
+                pstMember.setString(1, book.getId());
+                pstMember.setString(2, ",");
+                pstMember.setString(3, book.getId());
+                pstMember.setInt(4, member.getId());
+
+                pstMember.executeUpdate();
+
+                pstBook.setString(1, book.getId());
+                pstBook.executeUpdate();
+
             } catch (SQLException e) {
-                System.out.println("Connection Error: " + e.getMessage());
+                System.out.println("Query issue: " + e.getMessage());
                 return false;
             }
+
             member.borrowBook(Integer.parseInt(bookId));
             book.setAvailable(false);
             saveBooks();
             saveMembers();
             return true;
         }
-            return false;
+        return false;
     }
     public boolean returnBook(int memberId, int bookId) {
         Member member = findMember(memberId);
