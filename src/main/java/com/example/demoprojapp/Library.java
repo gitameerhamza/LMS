@@ -90,6 +90,8 @@ public void addMember(Member member) {
 
     public Member findMember(int memberId) {
         String sql = "select *from Members WHERE ID="+memberId+";";
+        String booksSql = "SELECT `Borrowed Books` FROM Members WHERE ID=" + memberId + ";";
+        Member member = new Member();
         try{
             Connection con = DriverManager.getConnection(url, username, password);
             try {
@@ -98,8 +100,26 @@ public void addMember(Member member) {
                 if (sr.next()) {
                     int id = sr.getInt("ID");
                     String name= sr.getString("Name");
-                    return new Member(id,name);//suggested by intellij
+                    ResultSet booksRs = st.executeQuery(booksSql);
+                    if (booksRs.next()) {
+                        String borrowedBooksStr = booksRs.getString("Borrowed Books");
+                        if (borrowedBooksStr != null && !borrowedBooksStr.trim().isEmpty()) {
+                            String[] bookIds = borrowedBooksStr.split(",");
+//                        List<Integer> borrowedBooks = new ArrayList<>();
+                            for (String bookId : bookIds) {
+                                member.borrowBook(Integer.parseInt(bookId));
+//                            borrowedBooks.add(Integer.parseInt(bookId.trim()));
+                            }
+//                        if (member != null) {
+//                            member.setBorrowedBooks(borrowedBooks);
+//                        }
+                        }
+                    }
+                    member.setId(id);
+                    member.setName(name);
+                    return member;
                 }
+
 
             }catch (Exception e){
                 System.out.println("Query issue"+e.getMessage());
@@ -193,25 +213,12 @@ public void addMember(Member member) {
         }
         return false;
     }
-    public void showMemberInfo(int memberId) {
+    public Member showMemberInfo(int memberId) {
         Member member = findMember(memberId);
         if (member != null) {
-            System.out.println("Member ID: " + member.getId());
-            System.out.println("Member Name: " + member.getName());
-            List<Integer> borrowedBooks = member.getBorrowedBooks();
-            if (!borrowedBooks.isEmpty()) {
-                System.out.println("Books Borrowed:");
-                for (int bookId : borrowedBooks) {
-                    Book book = findBook(String.valueOf(bookId));
-                    if (book != null) {
-                        System.out.println("ID: " + book.getId() + ", Title: " + book.getTitle() + ", Author: " + book.getAuthor());
-                    }
-                }
-            } else {
-                System.out.println("No books borrowed by this member.");
-            }
+            return member;
         } else {
-            System.out.println("Member with ID " + memberId + " not found.");
+            return member;
         }
     }
 }

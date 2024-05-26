@@ -1,5 +1,7 @@
 package com.example.demoprojapp;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,18 +10,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+@SuppressWarnings("ALL")
 public class HelloController  {
 
-    @FXML private Label label_2, l1, l2, l3, l4, bookflabel, idbox, label_b, label_c, label_c1;
+    @FXML private Label label_2, l1, l2, l3, l4, bookflabel, idbox, label_b, label_c, label_c1,memidlbl,memnamelabl;
     @FXML private Stage stage;
-    @FXML private TextField Memid_in, Memname_in, bookid_in, bookid_in2, book_in2, book_in3, idname_btn, memberid, mem2;
+    @FXML private TextField Memid_in, Memname_in, bookid_in, bookid_in2, book_in2, book_in3, idname_btn, memberid, mem2,memid;
     @FXML private Button Borow_btn;
     @FXML private Scene scene;
     @FXML private Parent root;
+    @FXML private ListView<String> bblist;
 
     @FXML
     public void switchscene3(ActionEvent event) throws IOException {
@@ -167,10 +174,25 @@ public class HelloController  {
     }
     @FXML
     private  void showMemberInfo() {
-        System.out.print("Enter Member ID: ");
-        int memberId = scanner.nextInt();
-        scanner.nextLine();
-        library.showMemberInfo(memberId);
+
+        int memberId = Integer.parseInt(memid.getText());
+        Member member = library.showMemberInfo(memberId);
+        List<Book> borrowedBooks = member.getStringBorrowedBooks();
+        memidlbl.setText(String.valueOf(member.getId()));
+        memnamelabl.setText(member.getName());
+        ObservableList<String> booknames = FXCollections.observableArrayList();
+        if (borrowedBooks == null) {
+            booknames.add("No Books Found");
+            bblist.setItems(booknames);
+        } else {
+            System.out.println("Books Found");
+            System.out.println(borrowedBooks);
+            for (Book book : borrowedBooks) {
+                booknames.add(book.getTitle());
+                System.out.println(book.getTitle());
+            }
+            bblist.setItems(booknames);
+        }
     }
     @FXML
     private void endit(){
