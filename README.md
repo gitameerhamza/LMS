@@ -7,7 +7,7 @@ This project is a simple Library Management System implemented in Java. It uses 
 ## Features
 
 - Add new books and members to the library.
-- Search for books by ID or name.
+- Search for books by ID or name(temporarily Not working ).
 - Lend books to members.
 - Return books to the library.
 - Display member information including borrowed books(only available on console).
