@@ -1,8 +1,8 @@
 package com.example.demoprojapp;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+@SuppressWarnings("ALL")
 public class Library {
     String url="jdbc:mysql://localhost:3306/Library";
     String username="root";

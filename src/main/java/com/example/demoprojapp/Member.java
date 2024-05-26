@@ -5,7 +5,7 @@ import java.util.List;
 public class Member {
     private int id;
     private String name;
-    private List<Integer> borrowedBooks;
+    final private List<Integer> borrowedBooks;
     public Member(){
         borrowedBooks = new ArrayList<>();
     }
@@ -22,22 +22,16 @@ public class Member {
     public void setName(String name) {
         this.name = name;
     }
-
     public int getId() {
         return id;
     }
-
     public String getName() {
         return name;
     }
-
-    public List<Integer> getBorrowedBooks() {
-        return borrowedBooks;
-    }
     public List<Book> getStringBorrowedBooks() {
-        List<Book> borrowedBooks1 =new ArrayList<Book>();
+        List<Book> borrowedBooks1 = new ArrayList<>();
         Library library = new Library();
-        if(borrowedBooks!=null&&!borrowedBooks.isEmpty()) {
+        if(!borrowedBooks.isEmpty()) {
             System.out.println(borrowedBooks.size());
             for (Integer id : borrowedBooks) {
                 borrowedBooks1.add(library.findBook(String.valueOf(id)));

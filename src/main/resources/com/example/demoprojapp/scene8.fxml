@@ -15,7 +15,7 @@
             <Image url="@lms_logo.png" />
          </image>
       </ImageView>
-      <Button fx:id="main_menu_btn" layoutX="253.0" layoutY="290.0" mnemonicParsing="false" onAction="#switchscene2" text="Go Back Main Menu" />
+      <Button  layoutX="253.0" layoutY="290.0" mnemonicParsing="false" onAction="#switchscene2" text="Go Back Main Menu" />
       <TextField fx:id="memid" layoutX="220.0" layoutY="48.0" promptText="Enter Member Id Here" />
       <Button layoutX="277.0" layoutY="91.0" mnemonicParsing="false" onAction="#showMemberInfo" text="Enter" />
       <Label fx:id="memidlbl" layoutX="272.0" layoutY="137.0" prefHeight="17.0" prefWidth="0.0" />
