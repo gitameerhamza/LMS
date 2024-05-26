@@ -121,9 +121,10 @@ public class HelloController  {
         }
         if (!(id.isBlank() || title.isBlank() || author.isBlank())) {
             Book book = new Book(id, title, author);
-            library.addBook(book);
-            label_2.setText("Book added successfully.");
-            return;
+            if(library.addBook(book)){
+                label_2.setText("Book added successfully.");
+                return;
+            }
         }
         label_2.setText("Something Not Right!\nTry Again");
     }

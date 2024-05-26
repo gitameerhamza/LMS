@@ -94,46 +94,36 @@ public class Library {
         }
     }
 
-    public void addBook(Book book) {
-        books.add(book);
-        String sqlQuery = "INSERT INTO Books (ID, `Book Name`, `Author Name`, Availability) " +
-        "VALUES (" + book.getId() + "," + book.getTitle() + "," + book.getAuthor() + "," + (book.isAvailable() ? "TRUE" : "FALSE") + ");";
-        try {
-            Connection con = DriverManager.getConnection(url, username, password);
-            try {
-                Statement st = con.createStatement();
-                st.executeUpdate(sqlQuery);
-            } catch (Exception e) {
-                System.out.println("Query didnt work"+e.getMessage());
-            }
-        } catch (Exception e) {
-            System.out.println("not connected");
+    public Boolean addBook(Book book) {
+        if (book == null || book.getTitle() == null || book.getAuthor() == null) {
+            System.out.println("Book or book properties cannot be null");
+            return false;
         }
-        saveBooks();
-    }
 
-//    public void addMember(Member member) {
-//        members.add(member);
-//        System.out.println(member.getId()+member.getName());
-//        String sql = "INSERT INTO Members (Name,ID) " +
-//                "VALUES (" + member.getName() + ", " + member.getId() + ")";
-//        try {
-//            Connection con = DriverManager.getConnection(url, username, password);
-//            try{
-//                Statement st = con.createStatement();
-//                st.executeUpdate(sql);
-//            } catch (Exception e) {
-//                System.out.println("Query didn't work "+e.getMessage());
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Error adding member: " + e.getMessage());
-//        }
-//        saveMembers();
-//    }
+        books.add(book);
+        String sqlQuery = "INSERT INTO Books (ID, `Book Name`, `Author Name`, Availability) VALUES (?, ?, ?, TRUE)";
+
+        try (Connection con = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = con.prepareStatement(sqlQuery)) {
+
+            pstmt.setInt(1, Integer.parseInt(book.getId()));
+            pstmt.setString(2, book.getTitle());
+            pstmt.setString(3, book.getAuthor());
+
+            pstmt.executeUpdate();
+            saveBooks();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Database error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error: " + e.getMessage());
+        }
+        return false;
+    }
 
     //understanding of this part is undergoing
 public void addMember(Member member) {
-    members.add(member);
+//    members.add(member);
     String sql = "INSERT INTO Members (Name, ID) VALUES (?, ?)";
     try (Connection con = DriverManager.getConnection(url, username, password);
          //prepared statement is liye use ki ha k user koi query enter na kry
@@ -151,7 +141,6 @@ public void addMember(Member member) {
     }
     saveMembers();
 }
-
 // everything working absolutely fine
     public Book findBook(String bookIdOrName) {
         String sql = "select *from Books WHERE ID="+bookIdOrName+";";
@@ -175,14 +164,6 @@ public void addMember(Member member) {
         }catch(Exception e){
             System.out.println("Connection Error");
         }
-//        for (Book book : books) {
-//            if (book.getId().equals(bookIdOrName)) {
-//                return book;
-//            }
-//            if (book.getTitle().equals(bookIdOrName)) {
-//                return book;
-//            }
-//        }
         return null;
     }
 
@@ -242,33 +223,41 @@ public void addMember(Member member) {
         Member member = findMember(memberId);
         Book book = findBook(String.valueOf(bookId));
         if (member != null && book != null && !book.isAvailable()) {
-            String getmemsql="SELECT *FROM MEMBERS WHERE ID="+member.getId();
-            String updateBookSQL = "UPDATE Books SET Availability = true WHERE ID ="+book.getId();
+            String getMemSQL = "SELECT `Borrowed Books` FROM MEMBERS WHERE ID = " + member.getId();
+            String updateBookSQL = "UPDATE Books SET Availability = true WHERE ID = " + book.getId();
             try {
                 Connection con = DriverManager.getConnection(url, username, password);
-                try {
-                    Statement st =con.createStatement();
-                    st.executeUpdate(updateBookSQL);
-                    ResultSet sr = st.executeQuery(getmemsql);
+                try (Statement st = con.createStatement()) {
+                    ResultSet sr = st.executeQuery(getMemSQL);
+                    if (sr.next()) {
+                        String borrowedBooks = sr.getString("Borrowed Books");
+                        String[] parts = borrowedBooks.split(",");
 
-                    String updateddata = sr.getString("Borrowed Books");
-                    String[] parts =updateddata.split(",");
-                    updateddata="";
-                    for (int i=0;i<=parts.length;i++) {
-                        if(parts[i]==String.valueOf(bookId)){
-                            continue;
+                        StringBuilder updatedData = new StringBuilder();
+                        for (String part : parts) {
+                            if (!part.trim().equals(String.valueOf(bookId))) {
+                                if (updatedData.length() > 0) {
+                                    updatedData.append(",");
+                                }
+                                updatedData.append(part);
+                            }
                         }
-                        updateddata=updateddata+parts[i];
-                        updateddata=updateddata+",";
+
+                        String updateMemberSQL = "UPDATE Members SET `Borrowed Books` = '" + updatedData.toString() + "' WHERE ID = " + member.getId();
+                        try {
+                            st.executeUpdate(updateMemberSQL);
+                            st.executeUpdate(updateBookSQL);
+                        } catch (SQLException e) {
+                            System.out.println("Confirming " + e.getMessage());
+                            return false;
+                        }
                     }
-                    String updateMemberSQL = "UPDATE Members SET `Borrowed Books` ="+updateddata+"  WHERE ID ="+member.getId();
-                    st.executeUpdate(updateMemberSQL);
-                }catch (Exception e){
-                    System.out.println("Query Issue "+e.getMessage());
+                } catch (SQLException e) {
+                    System.out.println("Query Issue " + e.getMessage());
                     return false;
                 }
-            }catch (Exception e){
-                System.out.println("Connection Issue "+e.getMessage());
+            } catch (SQLException e) {
+                System.out.println("Connection Issue " + e.getMessage());
                 return false;
             }
             member.returnBook(bookId);
@@ -282,7 +271,6 @@ public void addMember(Member member) {
         }
         return false;
     }
-
     public void showMemberInfo(int memberId) {
         Member member = findMember(memberId);
         if (member != null) {

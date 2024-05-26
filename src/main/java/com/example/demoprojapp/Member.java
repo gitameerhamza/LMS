@@ -30,6 +30,12 @@ public class Member {
     }
 
     public void returnBook(int bookId) {
-        borrowedBooks.remove(bookId);
+        List<Integer> borrowedBooks = getBorrowedBooks(); // Assuming this returns a list of borrowed book IDs
+        int index = borrowedBooks.indexOf(bookId);
+        if (index != -1) {
+            borrowedBooks.remove(index);
+        } else {
+            System.out.println("Book ID not found in borrowed books list.");
+        }
     }
 }
