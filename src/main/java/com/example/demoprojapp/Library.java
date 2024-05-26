@@ -15,54 +15,7 @@ public class Library {
     public Library() {
         this.books = new ArrayList<>();
         this.members = new ArrayList<>();
-        loadBooks();
-        loadMembers();
     }
-
-    private void loadBooks() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(BOOKS_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 4) {
-                    try {
-                        String id = String.valueOf(Integer.parseInt(parts[0]));
-                        String title = parts[1];
-                        String author = parts[2];
-                        boolean available = Boolean.parseBoolean(parts[3]);
-                        Book book = new Book(id, title, author);
-                        book.setAvailable(available);
-                        books.add(book);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid book entry: " + line + ". Skipping...");
-                    }
-                } else {
-                    System.out.println("Invalid book entry: " + line);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error loading books: " + e.getMessage());
-        }
-    }
-
-    private void loadMembers() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(MEMBERS_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                int id = Integer.parseInt(parts[0]);
-                String name = parts[1];
-                Member member = new Member(id, name);
-                for (int i = 2; i < parts.length; i++) {
-                    member.borrowBook(Integer.parseInt(parts[i]));
-                }
-                members.add(member);
-            }
-        } catch (IOException e) {
-            System.out.println("Error loading members: " + e.getMessage());
-        }
-    }
-
     private void saveBooks() {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BOOKS_FILE))) {
@@ -74,10 +27,6 @@ public class Library {
             System.out.println("Error saving books: " + e.getMessage());
         }
     }
-    private void savebook(){
-
-    }
-
     private void saveMembers() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(MEMBERS_FILE))) {
             for (Member member : members) {
@@ -111,7 +60,7 @@ public class Library {
             pstmt.setString(3, book.getAuthor());
 
             pstmt.executeUpdate();
-            saveBooks();
+//            saveBooks();
             return true;
         } catch (SQLException e) {
             System.out.println("Database error: " + e.getMessage());
@@ -139,7 +88,6 @@ public void addMember(Member member) {
     } catch (SQLException e) {
         System.out.println("Error adding member: " + e.getMessage());
     }
-    saveMembers();
 }
 // everything working absolutely fine
     public Book findBook(String bookIdOrName) {
@@ -218,8 +166,6 @@ public void addMember(Member member) {
 
             member.borrowBook(Integer.parseInt(bookId));
             book.setAvailable(false);
-            saveBooks();
-            saveMembers();
             return true;
         }
         return false;
@@ -247,7 +193,6 @@ public void addMember(Member member) {
                                 updatedData.append(part);
                             }
                         }
-
                         String updateMemberSQL = "UPDATE Members SET `Borrowed Books` = '" + updatedData.toString() + "' WHERE ID = " + member.getId();
                         try {
                             st.executeUpdate(updateMemberSQL);
@@ -267,8 +212,6 @@ public void addMember(Member member) {
             }
             member.returnBook(bookId);
             book.setAvailable(true);
-            saveBooks();
-            saveMembers();
             System.out.println("Book '" + book.getTitle() + "' has been successfully returned by " + member.getName());
             return true;
         } else {
@@ -297,5 +240,4 @@ public void addMember(Member member) {
             System.out.println("Member with ID " + memberId + " not found.");
         }
     }
-//checking is git working
 }
