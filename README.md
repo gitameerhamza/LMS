@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a simple Library Management System implemented in Java. It uses JavaFX for the user interface and JDBC for database connectivity. The system allows you to add books and members to the library, search for books, lend and return books.
+This project is a simple Library Management System implemented in Java. It uses JavaFX for the user interface and JDBC for database connectivity. The system allows you to add books and members to the library, search for books, lend and return books and Member data.
 
 ## Features
 
@@ -10,7 +10,7 @@ This project is a simple Library Management System implemented in Java. It uses 
 - Search for books by ID or name(temporarily Not working ).
 - Lend books to members.
 - Return books to the library.
-- Display member information including borrowed books(only available on console).
+- Display member information including borrowed books.
 
 ## Prerequisites
 
@@ -104,7 +104,7 @@ This project is a simple Library Management System implemented in Java. It uses 
 1. Enter the member ID and book ID in the corresponding fields.
 2. Click the "Return Book" button to return the book.
 
-### Displaying Member Information (ONLY CONSOLE BASE METHOD AVAILABLE)
+### Displaying Member Information 
 
 1. Enter the member ID in the corresponding field.
 2. Click the "Show Member Info" button to display the member's details including borrowed books.
