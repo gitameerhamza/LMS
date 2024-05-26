@@ -89,7 +89,7 @@ This project is a simple Library Management System implemented in Java. It uses 
 
 ### Searching for a Book
 
-1. Enter the book ID or name in the search field.
+1. Enter the book ID or ~name~ in the search field.
 2. Click the "Search" button to search for the book.
 3. If found, the book details are displayed.
 
