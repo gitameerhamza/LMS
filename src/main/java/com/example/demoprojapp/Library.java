@@ -22,19 +22,15 @@ public class Library {
             System.out.println("Book or book properties cannot be null");
             return false;
         }
-
         books.add(book);
         String sqlQuery = "INSERT INTO Books (ID, `Book Name`, `Author Name`, Availability) VALUES (?, ?, ?, TRUE)";
-
         try (Connection con = DriverManager.getConnection(url, username, password);
              PreparedStatement pstmt = con.prepareStatement(sqlQuery)) {
 
             pstmt.setInt(1, Integer.parseInt(book.getId()));
             pstmt.setString(2, book.getTitle());
             pstmt.setString(3, book.getAuthor());
-
             pstmt.executeUpdate();
-//            saveBooks();
             return true;
         } catch (SQLException e) {
             System.out.println("Database error: " + e.getMessage());

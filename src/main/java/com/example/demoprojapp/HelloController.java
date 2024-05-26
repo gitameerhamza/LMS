@@ -184,11 +184,8 @@ public class HelloController  {
             booknames.add("No Books Found");
             bblist.setItems(booknames);
         } else {
-            System.out.println("Books Found");
-            System.out.println(borrowedBooks);
             for (Book book : borrowedBooks) {
                 booknames.add(book.getTitle());
-                System.out.println(book.getTitle());
             }
             bblist.setItems(booknames);
         }
