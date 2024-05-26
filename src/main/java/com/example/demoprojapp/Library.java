@@ -16,32 +16,6 @@ public class Library {
         this.books = new ArrayList<>();
         this.members = new ArrayList<>();
     }
-    private void saveBooks() {
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(BOOKS_FILE))) {
-            for (Book book : books) {
-                writer.write(book.getId() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.isAvailable());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Error saving books: " + e.getMessage());
-        }
-    }
-    private void saveMembers() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(MEMBERS_FILE))) {
-            for (Member member : members) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(member.getId()).append(",").append(member.getName());
-                for (int bookId : member.getBorrowedBooks()) {
-                    sb.append(",").append(bookId);
-                }
-                writer.write(sb.toString());
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Error saving members: " + e.getMessage());
-        }
-    }
 
     public Boolean addBook(Book book) {
         if (book == null || book.getTitle() == null || book.getAuthor() == null) {
