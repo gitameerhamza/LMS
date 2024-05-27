@@ -117,8 +117,13 @@ public class HelloController  {
         String name = Memname_in.getText();
         if (!( name.isBlank())) {
             Member member = new Member(id, name);
-            library.addMember(member);
-            label_2.setText("Member added successfully.");
+            Boolean chk=library.addMember(member);
+            if(chk==true){
+                label_2.setText("Member added successfully.");
+            }
+            else {
+                label_2.setText("Something Not Right!\nTry Again");
+            }
             return;
         }
     }

@@ -19,7 +19,6 @@ public class Library {
 
     public Boolean addBook(Book book) {
         if (book == null || book.getTitle() == null || book.getAuthor() == null) {
-            System.out.println("Book or book properties cannot be null");
             return false;
         }
         books.add(book);
@@ -41,8 +40,7 @@ public class Library {
     }
 
     //understanding of this part is undergoing
-public void addMember(Member member) {
-//    members.add(member);
+public Boolean addMember(Member member) {
     String sql = "INSERT INTO Members (Name, ID) VALUES (?, ?)";
     try (Connection con = DriverManager.getConnection(url, username, password);
          //prepared statement is liye use ki ha k user koi query enter na kry
@@ -50,13 +48,10 @@ public void addMember(Member member) {
         ps.setString(1, member.getName());
         ps.setInt(2, member.getId());
         int rowsAffected = ps.executeUpdate();
-        if (rowsAffected > 0) {
-            System.out.println("Member added successfully.");
-        } else {
-            System.out.println("Failed to add member.");
-        }
+        return true;
     } catch (SQLException e) {
         System.out.println("Error adding member: " + e.getMessage());
+        return false;
     }
 }
 // everything working absolutely fine
